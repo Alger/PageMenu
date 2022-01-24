@@ -28,6 +28,7 @@ public class CAPSPageMenuConfiguration {
     open var menuItemSeparatorPercentageHeight : CGFloat = 0.2
     open var menuItemSeparatorWidth : CGFloat = 0.5
     open var menuItemSeparatorRoundEdges : Bool = false
+    open var hideMenuItemSeparator : Bool = true
     
     open var addBottomMenuHairline : Bool = true
     open var menuItemWidthBasedOnTitleTextWidth : Bool = false
@@ -36,6 +37,7 @@ public class CAPSPageMenuConfiguration {
     open var centerMenuItems : Bool = false
     open var enableHorizontalBounce : Bool = true
     open var hideTopMenuBar : Bool = false
+
     
     public init() {
         

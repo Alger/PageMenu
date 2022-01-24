@@ -38,6 +38,7 @@ public enum CAPSPageMenuOption {
     case menuSelectedItemFont(UIFont)
     case menuItemSeparatorPercentageHeight(CGFloat)
     case menuItemWidth(CGFloat)
+    case hideMenuItemSeparator(Bool)
     case enableHorizontalBounce(Bool)
     case addBottomMenuHairline(Bool)
     case menuItemWidthBasedOnTitleTextWidth(Bool)

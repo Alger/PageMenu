@@ -48,6 +48,8 @@ extension CAPSPageMenu {
                 configuration.menuItemSeparatorPercentageHeight = value
             case let .menuItemWidth(value):
                 configuration.menuItemWidth = value
+            case let .hideMenuItemSeparator(value):
+                configuration.hideMenuItemSeparator = value
             case let .enableHorizontalBounce(value):
                 configuration.enableHorizontalBounce = value
             case let .addBottomMenuHairline(value):

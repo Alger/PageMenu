@@ -8,6 +8,30 @@
 
 import UIKit
 
+class IndicatorView: UIView {
+    var fillColor: UIColor = UIColor.gray
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        let path = CGMutablePath()
+        
+        path.move(to: CGPoint(x: 2, y: 0))
+        path.addLine(to: CGPoint(x: rect.maxX, y: 0))
+        path.addLine(to: CGPoint(x: rect.maxX - 2, y: rect.maxY))
+        path.addLine(to: CGPoint(x: 0, y: rect.maxY))
+        
+        path.closeSubpath()
+        
+        context.addPath(path)
+        context.setFillColor(fillColor.cgColor)
+        context.closePath()
+        context.fillPath(using: .evenOdd)
+    }
+
+}
+
 extension CAPSPageMenu {
     func configurePageMenu(options: [CAPSPageMenuOption]) {
         for option in options {
@@ -64,6 +88,8 @@ extension CAPSPageMenu {
                 configuration.centerMenuItems = value
             case let .hideTopMenuBar(value):
                 configuration.hideTopMenuBar = value
+            case let.indicatorColor(value):
+                configuration.indicatorColor = value
             }
         }
         
@@ -218,6 +244,18 @@ extension CAPSPageMenu {
             menuScrollView.addSubview(menuItemView)
             menuItems.append(menuItemView)
             
+            // Add Indicator
+            var indicatorItemFrame : CGRect = CGRect()
+            indicatorItemFrame =  CGRect(x: self.view.frame.width / CGFloat(controllerArray.count)*index + configuration.menuItemPadding,
+                                         y: configuration.menuHeight - configuration.selectionIndicatorHeight,
+                                         width: (self.view.frame.width - CGFloat(controllerArray.count)*configuration.menuItemPadding) / CGFloat(controllerArray.count),
+                                         height: configuration.selectionIndicatorHeight)
+            
+            let indicatorView: IndicatorView = IndicatorView(frame: indicatorItemFrame)
+            indicatorView.backgroundColor = .clear
+            indicatorView.fillColor = configuration.indicatorColor
+            menuScrollView.addSubview(indicatorView)
+            
             index += 1
         }
         
@@ -238,7 +276,10 @@ extension CAPSPageMenu {
         var selectionIndicatorFrame : CGRect = CGRect()
         
         if configuration.useMenuLikeSegmentedControl {
-            selectionIndicatorFrame = CGRect(x: 0.0, y: configuration.menuHeight - configuration.selectionIndicatorHeight, width: self.view.frame.width / CGFloat(controllerArray.count), height: configuration.selectionIndicatorHeight)
+            selectionIndicatorFrame = CGRect(x: configuration.menuItemPadding,
+                                             y: configuration.menuHeight - configuration.selectionIndicatorHeight,
+                                             width: (self.view.frame.width - CGFloat(controllerArray.count)*configuration.menuItemPadding) / CGFloat(controllerArray.count),
+                                             height: configuration.selectionIndicatorHeight)
         } else if configuration.menuItemWidthBasedOnTitleTextWidth {
             selectionIndicatorFrame = CGRect(x: configuration.menuMargin, y: configuration.menuHeight - configuration.selectionIndicatorHeight, width: menuItemWidths[0], height: configuration.selectionIndicatorHeight)
         } else {
@@ -249,8 +290,12 @@ extension CAPSPageMenu {
             }
         }
         
-        selectionIndicatorView = UIView(frame: selectionIndicatorFrame)
-        selectionIndicatorView.backgroundColor = configuration.selectionIndicatorColor
+        selectionIndicatorView = IndicatorView(frame: selectionIndicatorFrame)
+        selectionIndicatorView.backgroundColor = .clear
+        selectionIndicatorView.fillColor = configuration.selectionIndicatorColor
+        var tagView:UIView = UIView(frame: CGRect(x: selectionIndicatorFrame.size.width - 10, y: -2, width: 4.3, height: 4.0))
+        tagView.backgroundColor = .black
+        selectionIndicatorView.addSubview(tagView)
         menuScrollView.addSubview(selectionIndicatorView)
     }
 }

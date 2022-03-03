@@ -44,7 +44,7 @@ open class CAPSPageMenu: UIViewController {
     var startingMenuMargin : CGFloat = 0.0
     var menuItemMargin : CGFloat = 0.0
     
-    var selectionIndicatorView : UIView = UIView()
+    var selectionIndicatorView : IndicatorView = IndicatorView()
     
     public var currentPageIndex : Int = 0
     var lastPageIndex : Int = 0
@@ -165,13 +165,15 @@ extension CAPSPageMenu {
     // MARK: - Handle Selection Indicator
     func moveSelectionIndicator(_ pageIndex: Int) {
         if pageIndex >= 0 && pageIndex < controllerArray.count {
-            UIView.animate(withDuration: 0.15, animations: { () -> Void in
+            UIView.animate(withDuration: 0.15, animations: { [self] () -> Void in
                 var selectionIndicatorWidth : CGFloat = self.selectionIndicatorView.frame.width
                 var selectionIndicatorX : CGFloat = 0.0
                 
                 if self.configuration.useMenuLikeSegmentedControl {
-                    selectionIndicatorX = CGFloat(pageIndex) * (self.view.frame.width / CGFloat(self.controllerArray.count))
-                    selectionIndicatorWidth = self.view.frame.width / CGFloat(self.controllerArray.count)
+                    //selectionIndicatorX = CGFloat(pageIndex) * (self.view.frame.width / CGFloat(self.controllerArray.count))
+                    //selectionIndicatorWidth = self.view.frame.width / CGFloat(self.controllerArray.count)
+                    selectionIndicatorX = CGFloat(pageIndex) * (self.view.frame.width / CGFloat(self.controllerArray.count)) + self.configuration.menuItemPadding
+                    selectionIndicatorWidth = (self.view.frame.width - CGFloat(self.controllerArray.count)*self.configuration.menuItemPadding) / CGFloat(self.controllerArray.count)
                 } else if self.configuration.menuItemWidthBasedOnTitleTextWidth {
                     selectionIndicatorWidth = self.menuItemWidths[pageIndex]
                     selectionIndicatorX += self.configuration.menuMargin

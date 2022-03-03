@@ -15,6 +15,7 @@ public class CAPSPageMenuConfiguration {
     open var selectionIndicatorHeight : CGFloat = 3.0
     open var scrollAnimationDurationOnMenuItemTap : Int = 500 // Millisecons
     open var selectionIndicatorColor : UIColor = UIColor.white
+    open var indicatorColor : UIColor = UIColor.white
     open var selectedMenuItemLabelColor : UIColor = UIColor.white
     open var unselectedMenuItemLabelColor : UIColor = UIColor.lightGray
     open var scrollMenuBackgroundColor : UIColor = UIColor.black
@@ -37,7 +38,7 @@ public class CAPSPageMenuConfiguration {
     open var centerMenuItems : Bool = false
     open var enableHorizontalBounce : Bool = true
     open var hideTopMenuBar : Bool = false
-
+    open var menuItemPadding: CGFloat = 10.0
     
     public init() {
         
